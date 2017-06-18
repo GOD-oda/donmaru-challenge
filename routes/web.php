@@ -1,7 +1,7 @@
 <?php
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('top');
 });
 
 Route::group(['prefix' => 'login'], function () {
@@ -13,3 +13,5 @@ Route::get('logout', 'Auth\LoginController@logout');
 Route::get('home', function () {
     return 'loged in!!!';
 });
+
+Route::resource('don', 'DonsController');

@@ -2,8 +2,50 @@
 // Fonts
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
 
-// Variables
-@import "variables";
-
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+html {
+  font-size: 62.5%;
+}
+
+.card {
+  padding: 5px;
+}
+
+.success {
+  color: #fff;
+  background: #5bc0de;
+}
+
+.failure {
+  color: rgba(0, 0, 0, .3);
+  background: #ccc;
+}
+
+.title {
+  font-size: 2rem;
+}
+
+.word {
+  font-size: 1.6rem;
+}
+
+.fa-twitter-square {
+  font-size: 3rem;
+}
+
+.top-description {
+  font-size: 3rem;
+}
+
+.header-content {
+  display: table;
+  .header-brand {
+    display: table-cell;
+  }
+  .header-right {
+    display: table-cell;
+    text-align: right;
+  }
+}
