@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Socialite;
+use App\Repositories\UserRepository;
 
 class LoginController extends Controller
 {
@@ -27,13 +29,39 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/home';
 
+    protected $userRepo;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(UserRepository $userRepo)
     {
         $this->middleware('guest')->except('logout');
+        $this->userRepo = $userRepo;
+    }
+
+    public function redirectToProvider($provider_name)
+    {
+        return Socialite::driver($provider_name)->redirect();
+    }
+
+    public function handleProviderCallback($provider_name)
+    {
+        try {
+            $provider_user = Socialite::driver($provider_name)->user();
+            $attributes = [
+                'provider_id' => $provider_user->getId(), 'provider_name' => $provider_name,
+            ];
+            $additional_values = [
+                'name' => $provider_user->getName(),
+            ];
+            $user = $this->userRepo->save($attributes, $additional_values);
+            $this->userRepo->setUser($user);
+            return redirect('/home');
+        } catch (Exception $e) {
+            return redirect('/');
+        }
     }
 }
