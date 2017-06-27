@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDonUserTable extends Migration
+class CreatePostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,15 @@ class CreateDonUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('don_user', function (Blueprint $table) {
-            $table->integer('don_id')->unsigned();
+        Schema::create('posts', function (Blueprint $table) {
+            $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->foreign('don_id')->references('id')->on('dons')->onDelete('cascade');
+            $table->integer('don_id')->unsigned();
+            $table->string('single_word')->nullable();
+            $table->timestamps();
+
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->primary(['don_id', 'user_id']);
+            $table->foreign('don_id')->references('id')->on('dons')->onDelete('cascade');
         });
     }
 
@@ -29,6 +32,6 @@ class CreateDonUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('don_user');
+        Schema::dropIfExists('posts');
     }
 }
