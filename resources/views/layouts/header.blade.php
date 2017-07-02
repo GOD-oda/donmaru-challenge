@@ -5,7 +5,7 @@
         </div>
         <div class="header-right">
             <div class="user-name">
-                {{ $user->name }}
+                {{ $user->name or 'ログインしましょう' }}
             </div>
             <div class="login">
                 <a href="/login/twitter"><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
