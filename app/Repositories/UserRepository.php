@@ -26,4 +26,14 @@ class UserRepository
         Session::regenerate();
         Session::put('User', $user);
     }
+
+    public function getUser($user_id)
+    {
+        return $this->user->find($user_id);
+    }
+
+    public function getLoginedUser()
+    {
+        return Session::get('User');
+    }
 }

@@ -1,7 +1,7 @@
 <?php
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('top');
 });
 
 Route::group(['prefix' => 'login'], function () {
@@ -10,6 +10,8 @@ Route::group(['prefix' => 'login'], function () {
 });
 Route::get('logout', 'Auth\LoginController@logout');
 
-Route::get('home', function () {
-    return 'loged in!!!';
-});
+Route::get('user/{user_id}/don', 'DonsController@index');
+
+Route::get('don/create', 'DonsController@create');
+Route::post('don','DonsController@store')->name('don.store');
+
