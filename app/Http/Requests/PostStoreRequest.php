@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DonPostRequest extends FormRequest
+class PostStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,16 +24,16 @@ class DonPostRequest extends FormRequest
     public function rules()
     {
         return [
-            'don' => 'required|integer',
-            'single' => 'required|max:255',
+            'don_id' => 'required|integer',
+            'single_word' => 'required|max:255',
         ];
     }
 
     public function attributes()
     {
         return [
-            'don' => 'どん',
-            'single' => '一言',
+            'don_id' => 'どん',
+            'single_word' => '一言',
         ];
     }
 }

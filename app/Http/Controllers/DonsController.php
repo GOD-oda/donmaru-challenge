@@ -2,20 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\PostService;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use App\Repositories\UserRepository;
 use App\Repositories\DonRepository;
-use App\HTTP\Requests\DonPostRequest;
+use App\HTTP\Requests\PostStoreRequest;
 
 class DonsController extends Controller
 {
     protected $userRepo;
     protected $donRepo;
+    protected $auth;
 
-    public function __construct(UserRepository $userRepo, DonRepository $donRepo)
+    public function __construct(UserRepository $userRepo, DonRepository $donRepo, Guard $auth, PostService $postService)
     {
         $this->userRepo = $userRepo;
         $this->donRepo = $donRepo;
+        $this->auth = $auth;
+        $this->postService = $postService;
     }
 
     /**
@@ -63,13 +68,17 @@ EOF;
 
     /**
      * Store a newly created resource in storage.
-     * @param DonPostRequest $request
+     * @param PostStoreRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(DonPostRequest $request)
+    public function store(PostStoreRequest $request)
     {
-        $request->only('don', 'single');
-        dd($request);
+        $credentials = $request->only('don_id', 'single_word');
+        $credentials['don_id']++;
+        $credentials['user_id'] = $this->userRepo->getLoginedUser()->id;
+        $this->postService->save($credentials);
+
+        return redirect('user/'.$credentials['user_id'].'/don');
     }
 
     /**
