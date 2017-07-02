@@ -4,14 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\UserRepository;
+use App\Repositories\DonRepository;
+use App\HTTP\Requests\DonPostRequest;
 
 class DonsController extends Controller
 {
     protected $userRepo;
+    protected $donRepo;
 
-    public function __construct(UserRepository $userRepo)
+    public function __construct(UserRepository $userRepo, DonRepository $donRepo)
     {
         $this->userRepo = $userRepo;
+        $this->donRepo = $donRepo;
     }
 
     /**
@@ -46,18 +50,25 @@ EOF;
      */
     public function create()
     {
-        //
+        $all = $this->donRepo->getAll();
+        $dons = $all->map(function ($item) {
+            return [
+                $item->name,
+            ];
+        })->flatten();
+
+        return view('dons.create', compact('dons'));
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
+     * @param DonPostRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DonPostRequest $request)
     {
-        //
+        $request->only('don', 'single');
+        dd($request);
     }
 
     /**
@@ -74,7 +85,7 @@ EOF;
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     git * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)

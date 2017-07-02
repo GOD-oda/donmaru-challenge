@@ -11,3 +11,7 @@ Route::group(['prefix' => 'login'], function () {
 Route::get('logout', 'Auth\LoginController@logout');
 
 Route::get('user/{user_id}/don', 'DonsController@index');
+
+Route::get('don/create', 'DonsController@create');
+Route::post('don','DonsController@store')->name('don.store');
+
