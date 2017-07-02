@@ -39,8 +39,9 @@ EOF;
         $all_don = \DB::select($select, [$user_id]);
 
         $user = $this->userRepo->getUser($user_id);
+        $logined_user = $this->userRepo->getLoginedUser();
 
-        return view('dons.index', compact('all_don', 'user'));
+        return view('dons.index', compact('all_don', 'user', 'logined_user'));
     }
 
     /**

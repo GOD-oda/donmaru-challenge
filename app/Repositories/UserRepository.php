@@ -31,4 +31,9 @@ class UserRepository
     {
         return $this->user->find($user_id);
     }
+
+    public function getLoginedUser()
+    {
+        return Session::get('User');
+    }
 }
