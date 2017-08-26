@@ -61,7 +61,7 @@ class LoginController extends Controller
             $this->userRepo->setUser($user);
 
             return redirect("/user/{$user->id}/don");
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return redirect('/');
         }
     }
