@@ -1,8 +1,6 @@
 <?php
 
-Route::get('/', function () {
-    return view('top');
-});
+Route::get('/', 'TopController@index');
 
 Route::group(['prefix' => 'login'], function () {
     Route::get('{provider_name}', 'Auth\LoginController@redirectToProvider');
@@ -10,7 +8,7 @@ Route::group(['prefix' => 'login'], function () {
 });
 Route::get('logout', 'Auth\LoginController@logout');
 
-Route::get('user/{user_id}/don', 'DonsController@index');
+Route::get('user/{user_id}/shop/{shop_id}/don', 'DonsController@index');
 
 Route::get('don/create', 'DonsController@create');
 Route::post('don','DonsController@store')->name('don.store');
