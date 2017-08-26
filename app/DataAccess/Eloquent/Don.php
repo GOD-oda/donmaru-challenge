@@ -13,4 +13,9 @@ class Don extends Model
     protected $dates = [
         'created_at', 'updated_at',
     ];
+
+    public function shops()
+    {
+        return $this->belongsToMany(Shop::class);
+    }
 }
