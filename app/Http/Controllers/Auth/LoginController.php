@@ -60,7 +60,7 @@ class LoginController extends Controller
             $user = $this->userRepo->save($attributes, $additional_values);
             $this->userRepo->setUser($user);
 
-            return redirect("/user/{$user->id}/don");
+            return redirect('/');
         } catch (\Exception $e) {
             return redirect('/');
         }
