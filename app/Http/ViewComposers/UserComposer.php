@@ -3,7 +3,6 @@
 namespace App\Http\ViewComposers;
 
 use App\Repositories\UserRepository;
-use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
 class UserComposer
