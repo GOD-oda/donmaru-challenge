@@ -21,7 +21,7 @@ class PostRepository
         return $this->post->updateOrCreate($attributes, $params);
     }
 
-    public function find($id)
+    public function findById($id)
     {
         return $this->post->find($id);
     }
