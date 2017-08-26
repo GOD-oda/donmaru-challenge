@@ -5,14 +5,22 @@
         </div>
         <div class="header-right">
             <div class="user-name">
-                {{ $logined_user->name or 'ログインしましょう' }}
+                @if ($user)
+                    {{ $user->name }}
+                @else
+                    ログインしましょう
+                @endif
             </div>
-            <div class="login">
-                <a href="/login/twitter"><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
-            </div>
-            <div class="logout">
-                <a href="/logout">ログアウト</a>
-            </div>
+            @if ($user)
+                <div class="logout">
+                    <a href="/logout">ログアウト</a>
+                </div>
+            @else
+                <div class="login">
+                    <a href="/login/twitter"><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
+                </div>
+            @endif
+
         </div>
     </div>
 </header>
