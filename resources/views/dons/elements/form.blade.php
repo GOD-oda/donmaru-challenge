@@ -1,4 +1,9 @@
 <div class="form-group">
+    {{ Form::label('shop_id', '店舗一覧') }}
+    {{ Form::select('shop_id', $shops, null, ['class' => 'form-control']) }}
+</div>
+
+<div class="form-group">
     {{ Form::label('don_id', 'どん一覧') }}
     {{ Form::select('don_id', $dons, null, ['class' => 'form-control']) }}
 </div>

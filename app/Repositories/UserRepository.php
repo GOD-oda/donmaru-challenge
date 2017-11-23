@@ -20,6 +20,10 @@ class UserRepository
         return $this->user->firstOrCreate($attributes, $values);
     }
 
+    /**
+     * TODO: ここはよくない
+     * @param $user
+     */
     public function setUser($user)
     {
         Session::forget('User');
@@ -32,6 +36,10 @@ class UserRepository
         return $this->user->find($user_id);
     }
 
+    /**
+     * TODO: ここはよくない
+     * @return mixed
+     */
     public function getLoginedUser()
     {
         return Session::get('User');

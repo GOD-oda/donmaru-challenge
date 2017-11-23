@@ -12,4 +12,3 @@ Route::get('user/{user_id}/shop/{shop_id}/don', 'DonsController@index');
 
 Route::get('don/create', 'DonsController@create')->name('don.create');
 Route::post('don','DonsController@store')->name('don.store');
-

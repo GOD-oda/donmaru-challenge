@@ -2,51 +2,44 @@
 
 namespace App\Http\Controllers;
 
+use App\DataAccess\Eloquent\User;
 use App\Services\PostService;
+use App\Services\ShopService;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use App\Repositories\UserRepository;
-use App\Repositories\DonRepository;
-use App\HTTP\Requests\PostStoreRequest;
+use App\Http\Requests\PostStoreRequest;
 
 class DonsController extends Controller
 {
     protected $userRepo;
-    protected $donRepo;
     protected $auth;
+    protected $postService;
+    protected $shopService;
 
-    public function __construct(UserRepository $userRepo, DonRepository $donRepo, Guard $auth, PostService $postService)
-    {
+    public function __construct(
+        UserRepository $userRepo,
+        Guard $auth,
+        PostService $postService,
+        ShopService $shopService
+    ) {
         $this->userRepo = $userRepo;
-        $this->donRepo = $donRepo;
         $this->auth = $auth;
         $this->postService = $postService;
+        $this->shopService = $shopService;
     }
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @param int $shop_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index($user_id)
+    public function index(User $user, int $shop_id)
     {
-        $select = <<<EOF
-        select D.id, D.name as don_name, M.created_at, M.name as user_name, M.single_word as word, M.updated_at from dons D
-        left join (
-            select P.don_id, U.id, U.name, P.created_at, P.single_word, P.updated_at from posts P
-            left join users U
-            on P.user_id = U.id
-            where user_id = ?
-        ) M
-        on M.don_id = D.id
-        order by D.id
-EOF;
-        $all_don = \DB::select($select, [$user_id]);
+        $all_don = $this->postService->getDonRecordByUser($user->id, $shop_id);
 
-        $user = $this->userRepo->getUser($user_id);
-        $logined_user = $this->userRepo->getLoginedUser();
-
-        return view('dons.index', compact('all_don', 'user', 'logined_user'));
+        return view('dons.index', compact('all_don'));
     }
 
     /**
@@ -56,14 +49,11 @@ EOF;
      */
     public function create()
     {
-        $all = $this->donRepo->getAll();
-        $dons = $all->map(function ($item) {
-            return [
-                $item->name,
-            ];
-        })->flatten();
+        // TODO: 今は店舗が一つしかないからハードコードしてる
+        $dons = $this->postService->getDonsByShop(1);
+        $shops = $this->shopService->getAllForSelect();
 
-        return view('dons.create', compact('dons'));
+        return view('dons.create', compact('dons', 'shops'));
     }
 
     /**
@@ -73,12 +63,11 @@ EOF;
      */
     public function store(PostStoreRequest $request)
     {
-        $credentials = $request->only('don_id', 'single_word');
-        $credentials['don_id']++;
+        $credentials = $request->only('don_id', 'single_word', 'shop_id');
         $credentials['user_id'] = $this->userRepo->getLoginedUser()->id;
         $this->postService->save($credentials);
 
-        return redirect('user/'.$credentials['user_id'].'/don');
+        return redirect('user/'.$credentials['user_id'].'/shop/'.$credentials['shop_id'].'/don');
     }
 
     /**
