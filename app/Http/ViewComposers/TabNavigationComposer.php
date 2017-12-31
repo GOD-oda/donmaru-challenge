@@ -16,8 +16,12 @@ class TabNavigationComposer
      */
     public function __construct(Router $router)
     {
-        $this->setMyRecordFlag($router->currentRouteName());
-        $this->setCreatingDonFlag($router->currentRouteName());
+        $route_name = $router->currentRouteName();
+
+        if ($route_name !== null) {
+            $this->setMyRecordFlag($router->currentRouteName());
+            $this->setCreatingDonFlag($router->currentRouteName());
+        }
     }
 
     /**
