@@ -8,7 +8,7 @@ Route::group(['prefix' => 'login'], function () {
 });
 Route::get('logout', 'Auth\LoginController@logout');
 
-Route::get('user/{user_id}/shop/{shop_id}/don', 'DonsController@index');
+Route::get('user/{user_id}/shop/{shop_id}/don', 'DonsController@index')->name('my_record');
 
 Route::get('don/create', 'DonsController@create')->name('don.create');
 Route::post('don','DonsController@store')->name('don.store');
