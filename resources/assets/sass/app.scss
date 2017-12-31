@@ -4,6 +4,7 @@
 
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "header.scss";
 
 html {
   font-size: 62.5%;
@@ -41,15 +42,4 @@ html {
 
 .top-description {
   font-size: 3rem;
-}
-
-.header-content {
-  display: table;
-  .header-brand {
-    display: table-cell;
-  }
-  .header-right {
-    display: table-cell;
-    text-align: right;
-  }
 }
