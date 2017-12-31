@@ -5,7 +5,7 @@
         </div>
 
         @if ($user)
-            <ul class="nav nav-tabs">
+            <ul class="nav nav-tabs mb-5">
                 {{-- ショップのidが決め打ちなのであとで修正する --}}
                 <li role="presentation">
                     <a href="/user/{{ $user->id }}/shop/1/don">自分の記録</a>
