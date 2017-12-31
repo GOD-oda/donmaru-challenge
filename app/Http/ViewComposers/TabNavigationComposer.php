@@ -16,15 +16,19 @@ class TabNavigationComposer
      */
     public function __construct(Router $router)
     {
-        $this->setMyRecordFlag($router->currentRouteName());
-        $this->setCreatingDonFlag($router->currentRouteName());
+        $route_name = $router->currentRouteName();
+
+        if ($route_name !== null) {
+            $this->setMyRecordFlag($route_name);
+            $this->setCreatingDonFlag($route_name);
+        }
     }
 
     /**
      * 自分の記録のアクティブフラグをセットする
      * @param string $name
      */
-    private function setMyRecordFlag(string $name)
+    private function setMyRecordFlag($name)
     {
         $this->myRecord = $name === 'myRecord' ? true : false;
     }
@@ -33,7 +37,7 @@ class TabNavigationComposer
      * 記録するタブのアクティブフラグをセットする
      * @param string $name
      */
-    private function setCreatingDonFlag(string $name)
+    private function setCreatingDonFlag($name)
     {
         $this->donForm = $name === 'don.create' ? true : false;
     }
