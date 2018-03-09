@@ -37,6 +37,13 @@ class PostService
         return $this->postRepo->save($params);
     }
 
+    /**
+     * TODO: 使わないでも良い
+     *
+     * @param int $user_id
+     * @param int $shop_id
+     * @return array
+     */
     public function getDonRecordByUser(int $user_id, int $shop_id)
     {
         $select = <<<EOF
@@ -55,7 +62,7 @@ EOF;
 
         return $all_don;
     }
-    
+
     public function findById($id)
     {
         return $this->postRepo->findById($id);
