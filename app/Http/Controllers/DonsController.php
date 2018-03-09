@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataAccess\Eloquent\Shop;
 use App\DataAccess\Eloquent\User;
 use App\Services\PostService;
 use App\Services\ShopService;
@@ -31,13 +32,18 @@ class DonsController extends Controller
 
     /**
      * Display a listing of the resource.
+     *
      * @param User $user
-     * @param int $shop_id
+     * @param Shop $shop
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(User $user, int $shop_id)
+    public function index(User $user, Shop $shop)
     {
-        $all_don = $this->postService->getDonRecordByUser($user->id, $shop_id);
+        foreach ($shop->dons as $don) {
+            $don->posts->where('user_id', '=', $user->id)->sortByDesc('created_at')->first();
+        }
+
+        $all_don = $shop->dons;
 
         return view('dons.index', compact('all_don'));
     }
@@ -84,7 +90,7 @@ class DonsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     git * @param  int  $id
+    git * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)

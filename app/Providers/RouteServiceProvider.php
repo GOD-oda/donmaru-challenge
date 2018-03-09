@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\DataAccess\Eloquent\User;
+use App\DataAccess\Eloquent\Shop;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -29,6 +30,7 @@ class RouteServiceProvider extends ServiceProvider
         parent::boot();
 
         Route::model('user_id', User::class);
+        Route::model('shop_id', Shop::class);
     }
 
     /**

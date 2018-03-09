@@ -18,4 +18,9 @@ class Don extends Model
     {
         return $this->belongsToMany(Shop::class);
     }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }
